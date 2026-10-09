@@ -1,27 +1,126 @@
-# Build
-target/
-build/
-.gradle/
-*.class
-*.jar
-!.mvn/wrapper/maven-wrapper.jar
+# =====================================================================
+# StockFlow API: what never goes to the repository
+# Rule of thumb: only source code, build config and docs are versioned.
+# =====================================================================
 
-# IDE
-.idea/
-*.iml
-.vscode/
-.classpath
-.project
-.settings/
-
-# Logs
-*.log
-
-# Local config and secrets
+# ---------------------------------------------------------------------
+# 1. Secrets and environment
+#    Real values live in .env (local) or in the server's environment.
+#    Only the template .env.example is versioned.
+# ---------------------------------------------------------------------
 .env
 .env.*
-application-local.*
+*.env
+!.env.example
 
-# OS
+# Keys, certificates and keystores
+*.pem
+*.ppk
+*.key
+*.crt
+*.cer
+*.der
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.truststore
+
+# Generic credential files
+*secret*
+*credential*
+!**/src/**/*Secret*.java
+!**/src/**/*Credential*.java
+
+# ---------------------------------------------------------------------
+# 2. Local Spring profiles (database URL, user, password)
+#    application.yaml is versioned and reads values from ${ENV_VARS}.
+#    Any profile with real data stays on your machine.
+# ---------------------------------------------------------------------
+application-local.*
+application-dev.*
+application-secret.*
+
+# ---------------------------------------------------------------------
+# 3. Local databases, dumps and backups
+#    Flyway/Liquibase migrations in src/main/resources/db are versioned;
+#    loose dumps and embedded database files are not.
+# ---------------------------------------------------------------------
+*.db
+*.sqlite
+*.sqlite3
+*.mv.db
+*.trace.db
+*.h2.db
+*.dump
+*.bak
+*.backup
+/dumps/
+/data/
+/docker-data/
+
+# ---------------------------------------------------------------------
+# 4. Build output
+# ---------------------------------------------------------------------
+target/
+!**/src/main/**/target/
+!**/src/test/**/target/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+out/
+/bin/
+.gradle/
+node_modules/
+*.class
+*.jar
+*.war
+*.ear
+!.mvn/wrapper/maven-wrapper.jar
+
+# JVM crash logs
+hs_err_pid*
+replay_pid*
+
+# ---------------------------------------------------------------------
+# 5. IDEs and editors
+# ---------------------------------------------------------------------
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Eclipse / Spring Tool Suite
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+/.metadata/
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# VS Code, Cursor and similar
+.vscode/
+.cursor/
+
+# ---------------------------------------------------------------------
+# 6. Logs, temp files and OS junk
+# ---------------------------------------------------------------------
+*.log
+logs/
+*.tmp
+*.swp
+*~
+HELP.md
 .DS_Store
 Thumbs.db
+desktop.ini
