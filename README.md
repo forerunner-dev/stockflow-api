@@ -1,5 +1,7 @@
 # StockFlow API
 
+<div align="justify">
+
 REST API for inventory management, built with Java and Spring Boot.
 
 API REST de gerenciamento de estoque, feita em Java com Spring Boot.
@@ -102,3 +104,5 @@ Os testes do projeto ficam no pacote `unittests` e cobrem os mappers e as regras
 O Git é o sistema de controle de versão que registra cada alteração do código, e o GitHub hospeda o repositório na internet.
 
 No StockFlow, os commits seguem o padrão Conventional Commits, em que cada mensagem começa com o tipo da mudança, como `feat`, `fix`, `test` ou `chore`. A branch `main` guarda o projeto, e a branch `estudo` guarda os exercícios do curso, sem nunca ser mesclada. O `.gitignore` impede que configurações de IDE, arquivos de build e qualquer arquivo de credenciais sejam enviados ao repositório.
+
+</div>
