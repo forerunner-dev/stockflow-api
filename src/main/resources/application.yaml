@@ -13,5 +13,5 @@ spring:
     show-sql: false
 logging:
   level:
-    root: WARN
-    #br.com.stockflow: DEBUG
+    #root: WARN
+    br.com.stockflow: DEBUG
