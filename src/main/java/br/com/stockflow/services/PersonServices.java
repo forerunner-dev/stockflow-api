@@ -1,9 +1,12 @@
 package br.com.stockflow.services;
 
-import br.com.stockflow.dto.PersonRequestDTO;
-import br.com.stockflow.dto.PersonResponseDTO;
+import br.com.stockflow.dto.v1.PersonRequestDTO;
+import br.com.stockflow.dto.v1.PersonResponseDTO;
+import br.com.stockflow.dto.v2.PersonRequestDTOv2;
+import br.com.stockflow.dto.v2.PersonResponseDTOv2;
 import br.com.stockflow.exception.ResourceNotFoundException;
 import br.com.stockflow.mapper.PersonMapper;
+import br.com.stockflow.mapper.PersonMapperV2;
 import br.com.stockflow.model.Person;
 import br.com.stockflow.repository.PersonRepository;
 import org.springframework.stereotype.Service;
@@ -64,5 +67,29 @@ public class PersonServices {
 
 
 
+    public PersonResponseDTOv2 findByIdV2(Long id) {
+        logger.info("Procurando a pessoa {} (v2)", id);
+        return PersonMapperV2.toResponse(findEntity(id));
+    }
+
+    public List<PersonResponseDTOv2> findAllV2() {
+        logger.info("Listando pessoas (v2)");
+        return personRepository.findAll().stream()
+                .map(PersonMapperV2::toResponse)
+                .toList();
+    }
+
+    public PersonResponseDTOv2 createV2(PersonRequestDTOv2 request) {
+        logger.info("Criando uma pessoa (v2)");
+        var saved = personRepository.save(PersonMapperV2.toEntity(request));
+        return PersonMapperV2.toResponse(saved);
+    }
+
+    public PersonResponseDTOv2 updateV2(Long id, PersonRequestDTOv2 request) {
+        logger.info("Atualizando a pessoa {} (v2)", id);
+        var entity = findEntity(id);
+        PersonMapperV2.copyToEntity(request, entity);
+        return PersonMapperV2.toResponse(personRepository.save(entity));
+    }
 
 }

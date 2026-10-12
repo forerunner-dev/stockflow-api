@@ -1,7 +1,7 @@
 package br.com.stockflow.mapper;
 
-import br.com.stockflow.dto.PersonRequestDTO;
-import br.com.stockflow.dto.PersonResponseDTO;
+import br.com.stockflow.dto.v1.PersonRequestDTO;
+import br.com.stockflow.dto.v1.PersonResponseDTO;
 import br.com.stockflow.model.Person;
 
 public final class PersonMapper {

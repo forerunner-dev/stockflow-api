@@ -1,4 +1,4 @@
-package br.com.stockflow.dto;
+package br.com.stockflow.dto.v1;
 
 public record PersonResponseDTO(
         Long id,

@@ -1,19 +1,18 @@
 package br.com.stockflow.controllers;
 
 
-import br.com.stockflow.dto.PersonRequestDTO;
-import br.com.stockflow.dto.PersonResponseDTO;
+import br.com.stockflow.dto.v1.PersonRequestDTO;
+import br.com.stockflow.dto.v1.PersonResponseDTO;
 import br.com.stockflow.services.PersonServices;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import java.util.List;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/api/v1/person")
 public class PersonController {
 
 

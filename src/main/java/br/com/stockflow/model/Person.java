@@ -24,6 +24,9 @@ public class Person implements Serializable {
     @Column(name = "address", nullable = false , length = 150)
     private String address;
 
+    @Column(name = "email", length = 80)
+    private String email;
+
     @Column(name = "gender", nullable = false , length = 1)
     private String gender;
 
@@ -31,7 +34,6 @@ public class Person implements Serializable {
     public Person() {
 
     }
-
 
     public String getFirstName() {
         return firstName;
@@ -73,14 +75,23 @@ public class Person implements Serializable {
         this.id = id;
     }
 
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Person person)) return false;
-        return Objects.equals(getId(), person.getId()) && Objects.equals(getFirstName(), person.getFirstName()) && Objects.equals(getLastName(), person.getLastName()) && Objects.equals(getAddress(), person.getAddress()) && Objects.equals(getGender(), person.getGender());
+        return Objects.equals(getId(), person.getId()) && Objects.equals(getFirstName(), person.getFirstName()) && Objects.equals(getLastName(), person.getLastName()) && Objects.equals(getAddress(), person.getAddress()) && Objects.equals(getEmail(), person.getEmail()) && Objects.equals(getGender(), person.getGender());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getFirstName(), getLastName(), getAddress(), getGender());
+        return Objects.hash(getId(), getFirstName(), getLastName(), getAddress(), getEmail(), getGender());
     }
 }
