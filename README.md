@@ -20,18 +20,28 @@ A API é versionada pela URL: `/api/v1/person` e `/api/v2/person` convivem lado 
 
 ## Tecnologias
 
-- Java 25
-- Spring Boot 4.1
-- Spring Web MVC, com Tomcat embutido
-- Jackson
-- Spring Data JPA e Hibernate
-- MySQL 8, MySQL Connector/J e HikariCP
-- Bean Validation (Hibernate Validator)
-- SLF4J e Logback
-- Spring Boot DevTools
-- Maven
-- JUnit e AssertJ
-- Git e GitHub
+![Java](https://img.shields.io/badge/Java-25-ED8B00?style=flat-square&logo=openjdk&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.1-6DB33F?style=flat-square&logo=springboot&logoColor=white)
+![Hibernate](https://img.shields.io/badge/Hibernate-7-59666C?style=flat-square&logo=hibernate&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-8-4479A1?style=flat-square&logo=mysql&logoColor=white)
+![Maven](https://img.shields.io/badge/Maven-C71A36?style=flat-square&logo=apachemaven&logoColor=white)
+![JUnit](https://img.shields.io/badge/JUnit-25A162?style=flat-square&logo=junit5&logoColor=white)
+![Git](https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white)
+
+| Área | Tecnologia | Papel no projeto |
+|---|---|---|
+| Linguagem | [Java 25](#java-25) | Linguagem de todo o código, com records, `var` e streams |
+| Base | [Spring Boot 4.1](#spring-boot-41) | Monta a aplicação e injeta as dependências |
+| Web | [Spring Web MVC e Tomcat](#spring-web-mvc-e-tomcat-embutido) | Recebe as requisições HTTP e chama o controller certo |
+| Web | [Jackson](#jackson) | Converte JSON em objetos Java e vice-versa |
+| Dados | [Spring Data JPA e Hibernate](#spring-data-jpa-e-hibernate) | Mapeia classes em tabelas e gera o SQL |
+| Dados | [MySQL, Connector/J e HikariCP](#mysql-8-mysql-connectorj-e-hikaricp) | Banco de dados, driver e pool de conexões |
+| Qualidade | [Bean Validation](#bean-validation-hibernate-validator) | Recusa dados inválidos antes de chegar ao banco |
+| Qualidade | [JUnit e AssertJ](#junit-e-assertj) | Testes unitários dos mappers e das validações |
+| Operação | [SLF4J e Logback](#slf4j-e-logback) | Registra as operações no log |
+| Ferramentas | [Maven](#maven) | Gerencia dependências, build e testes |
+| Ferramentas | [Spring Boot DevTools](#spring-boot-devtools) | Reinicia a aplicação durante o desenvolvimento |
+| Ferramentas | [Git e GitHub](#git-e-github) | Controle de versão e hospedagem do código |
 
 ### Java 25
 
