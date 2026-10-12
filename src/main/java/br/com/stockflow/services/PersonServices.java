@@ -1,6 +1,9 @@
 package br.com.stockflow.services;
 
+import br.com.stockflow.dto.PersonRequestDTO;
+import br.com.stockflow.dto.PersonResponseDTO;
 import br.com.stockflow.exception.ResourceNotFoundException;
+import br.com.stockflow.mapper.PersonMapper;
 import br.com.stockflow.model.Person;
 import br.com.stockflow.repository.PersonRepository;
 import org.springframework.stereotype.Service;
@@ -18,48 +21,47 @@ public class PersonServices {
         this.personRepository = personRepository;
     }
 
-    public Person findById(Long id) {
-        logger.info("Procurando uma pessoa");
-        return personRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Nenhum registro encontrado para este ID"));
+    private Person findEntity(Long id){
+        return personRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Person not found!"));
+    }
+
+    public PersonResponseDTO findById(Long id) {
+        logger.info("Procurando a pessoa {}", id);
+        return PersonMapper.toResponse(findEntity(id));
 
     }
 
-    public Person create(Person person) {
+    public List<PersonResponseDTO> findAll() {
+        logger.info("Listando pessoas");
+        return personRepository
+                .findAll()
+                .stream()
+                .map(PersonMapper::toResponse)
+                .toList();
+
+    }
+
+
+    public PersonResponseDTO create(PersonRequestDTO request) {
         logger.info("Criando uma pessoa");
-        return personRepository.save(person);
+        var savedPerson = personRepository.save(PersonMapper.toEntity(request));
+        return PersonMapper.toResponse(savedPerson);
 
     }
 
-    public Person update(Person person) {
-        logger.info("Atualizando uma pessoa");
-       var entity = personRepository.findById(person.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Nenhum registro encontrado para este ID"));
-
-        entity.setFirstName(person.getFirstName());
-        entity.setLastName(person.getLastName());
-        entity.setAddress(person.getAddress());
-        entity.setGender(person.getGender());
-
-       return personRepository.save(entity);
-
+    public PersonResponseDTO update(Long id, PersonRequestDTO request) {
+        logger.info("Atualizando a pessoa {}", id);
+       var entity = findEntity(id);
+       PersonMapper.copyToEntity(request, entity);
+       return PersonMapper.toResponse(personRepository.save(entity));
     }
 
     public void delete(Long id) {
-        logger.info("deletando uma pessoa");
-
-        var entity = personRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Nenhum registro encontrado para este ID"));
-
-        personRepository.delete(entity);
-    }
-
-
-    public List<Person> findAll() {
-        logger.info("Listando pessoas");
-        return personRepository.findAll();
+        logger.info("Deletando a pessoa {}", id);
+        personRepository.delete(findEntity(id));
 
     }
+
 
 
 

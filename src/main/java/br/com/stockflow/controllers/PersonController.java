@@ -1,11 +1,14 @@
 package br.com.stockflow.controllers;
 
 
-import br.com.stockflow.model.Person;
+import br.com.stockflow.dto.PersonRequestDTO;
+import br.com.stockflow.dto.PersonResponseDTO;
 import br.com.stockflow.services.PersonServices;
+import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 
@@ -22,34 +25,37 @@ public class PersonController {
 
     @GetMapping(value = "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public Person findById(@PathVariable("id") Long id) {
-
+    public PersonResponseDTO findById(@PathVariable("id") Long id) {
         return personServices.findById(id);
     }
 
     @GetMapping(
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Person> findAll() {
+    public List<PersonResponseDTO> findAll() {
 
         return personServices.findAll();
 
     }
 
-    @PostMapping(
-            consumes = MediaType.APPLICATION_JSON_VALUE,
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public Person create(@RequestBody Person person) {
-
-        return personServices.create(person);
-
+    public ResponseEntity<PersonResponseDTO> create(@RequestBody @Valid PersonRequestDTO request) {
+        var created = personServices.create(request);
+        var location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(created.id())
+                .toUri();
+        return ResponseEntity.created(location).body(created);
     }
 
-    @PutMapping(
+    @PutMapping(value = "/{id}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public Person update(@RequestBody Person person) {
+    public PersonResponseDTO update(@PathVariable Long id,
+                                    @RequestBody
+                                    @Valid PersonRequestDTO request) {
 
-        return personServices.update(person);
+        return personServices.update(id, request);
 
     }
 
