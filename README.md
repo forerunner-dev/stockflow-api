@@ -4,6 +4,12 @@ REST API for inventory management, built with Java and Spring Boot.
 
 API REST de gerenciamento de estoque, feita em Java com Spring Boot.
 
+## O que é uma API REST
+
+Uma API é a porta pela qual outros sistemas conversam com uma aplicação, e REST é o estilo mais usado para desenhar essa porta na web. Numa API REST, cada coisa que o sistema gerencia é um **recurso**, identificado por um endereço (URL), e as ações sobre ele são expressas pelos **métodos do protocolo HTTP**: `GET` consulta, `POST` cria, `PUT` atualiza e `DELETE` remove. Os dados trafegam em JSON, e o resultado de cada operação é comunicado por um **código de status HTTP**, como 200 (sucesso), 201 (criado), 204 (removido, sem conteúdo), 400 (dados inválidos) e 404 (não encontrado). Cada requisição é independente e carrega tudo o que o servidor precisa para atendê-la, sem que ele guarde informações da conversa entre uma chamada e outra.
+
+No StockFlow, o recurso é a pessoa, disponível em `/api/v1/person`. Um `GET` nesse endereço lista todas as pessoas, e um `GET` em `/api/v1/person/7` busca a pessoa de id 7. Um `POST` com o JSON da pessoa cria um novo registro e responde 201, um `PUT` em `/api/v1/person/7` atualiza o registro 7, e um `DELETE` no mesmo endereço o remove e responde 204. Como o contrato é feito só de URLs, métodos HTTP e JSON, qualquer cliente pode usar a API, seja um site, um aplicativo de celular ou outro sistema, sem depender da tecnologia em que ela foi escrita.
+
 ## Estrutura do projeto
 
 O StockFlow é organizado em camadas, e cada camada tem uma única responsabilidade. Uma requisição HTTP chega primeiro ao **controller** (`controllers`), que só recebe os dados e devolve a resposta. O controller repassa o trabalho ao **service** (`services`), onde ficam as regras de negócio, como buscar um registro e responder "não encontrado" quando ele não existe. O service conversa com o banco por meio do **repository** (`repository`), e o banco é representado no código pela **entidade** (`model`), uma classe que espelha uma tabela. Entre o mundo externo e a entidade existem os **DTOs** (`dto`), objetos que definem exatamente o que entra e o que sai em JSON, e os **mappers** (`mapper`), que traduzem um formato no outro. Assim, a entidade nunca é exposta diretamente ao cliente, e a tabela pode mudar sem quebrar o contrato da API. Os erros são tratados num ponto central (`exception`), que transforma exceções em respostas HTTP padronizadas.
