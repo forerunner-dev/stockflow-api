@@ -1,3 +1,17 @@
 spring:
   application:
     name: stockflow-api
+  datasource:
+    # Credentials come from Windows user environment variables (never hardcoded)
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    open-in-view: false   # avoids hidden queries while rendering the response
+    hibernate:
+      ddl-auto: update    # study only: Hibernate creates/updates tables from entities
+    show-sql: false
+logging:
+  level:
+    root: WARN
+    #br.com.stockflow: DEBUG
